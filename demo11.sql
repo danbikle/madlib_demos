@@ -55,3 +55,14 @@ SELECT * FROM houses_linregr;
 
 -- View the results grouped by bedroom.
 SELECT * FROM houses_linregr_bedroom;
+
+
+-- Alternatively you can unnest the results for easier reading of output.
+
+\x OFF
+SELECT unnest(ARRAY['intercept','tax','bath','size']) as attribute,
+       unnest(coef) as coefficient,
+       unnest(std_err) as standard_error,
+       unnest(t_stats) as t_stat,
+       unnest(p_values) as pvalue
+FROM houses_linregr;
