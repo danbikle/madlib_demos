@@ -1,0 +1,61 @@
+madlib_installation_steps.txt
+
+When I install madlib, I follow the steps listed below:
+
+Get a copy of Centos 7:
+http://mirror.rackspace.com/CentOS/7.2.1511/isos/x86_64/CentOS-7-x86_64-DVD-1511.iso
+
+Install it into VirtualBox
+
+Inside the Centos 7 instance,
+Create an account named ann
+
+ssh ann@localhost
+
+cd ~/Desktop
+
+wget https://download.postgresql.org/pub/repos/yum/9.3/redhat/rhel-7-x86_64/pgdg-centos93-9.3-2.noarch.rpm
+
+sudo yum install pgdg-centos93-9.3-2.noarch.rpm
+
+sudo yum update
+
+yum search postgresql93
+
+sudo yum install postgresql93 postgresql93-contrib postgresql93-devel postgresql93-libs postgresql93-plpython  postgresql93-python  postgresql93-server
+
+sudo systemctl enable postgresql-9.3
+
+sudo /usr/pgsql-9.3/bin/postgresql93-setup initdb
+
+sudo systemctl start postgresql-9.3
+
+sudo su - postgres
+
+echo 'export PATH=/usr/pgsql-9.3/bin:$PATH' >> ~postgres/.bashrc
+
+psql
+
+CREATE USER madlib WITH LOGIN SUPERUSER PASSWORD 'madlib';
+
+CREATE DATABASE madlib;
+
+cd /var/lib/pgsql/data/
+sed -i '/^host/s/ident/md5/' pg_hba.conf
+sed -i '/128/s/md5/ident/'   pg_hba.conf
+
+/usr/pgsql-9.3/bin/pg_ctl reload
+
+psql -d madlib -h 127.0.0.1 -U madlib
+
+cd /tmp
+
+wget https://dist.apache.org/repos/dist/release/incubator/madlib/1.9-incubating/apache-madlib-1.9-incubating-bin-Linux.rpm
+
+sudo yum install apache-madlib-1.9-incubating-bin-Linux.rpm
+
+/usr/local/madlib/bin/madpack -p postgres -c madlib@127.0.0.1/madlib install-check
+
+/usr/local/madlib/bin/madpack -p postgres -c madlib@127.0.0.1/madlib install
+
+ssh ann@localhost
