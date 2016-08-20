@@ -66,3 +66,15 @@ SELECT unnest(ARRAY['intercept','tax','bath','size']) as attribute,
        unnest(t_stats) as t_stat,
        unnest(p_values) as pvalue
 FROM houses_linregr;
+
+-- Use the prediction function to evaluate residuals. 
+
+SELECT houses.*,
+       madlib.linregr_predict( ARRAY[1,tax,bath,size],
+                               m.coef
+                             ) as predict,
+        price -
+          madlib.linregr_predict( ARRAY[1,tax,bath,size],
+                                  m.coef
+                                ) as residual
+FROM houses, houses_linregr m;
