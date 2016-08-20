@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# psqlmad
+
+# This script should wrap /usr/bin/psql
+
+PGPASSWORD=madlib /usr/bin/psql -U madlib -d madlib -h 127.0.0.1 -P pager=no $@
+
+exit
