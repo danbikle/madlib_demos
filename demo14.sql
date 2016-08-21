@@ -113,4 +113,6 @@ SUM(SIGN(prediction-0.5)*pctlead) AS effectiveness,
 COUNT(cdate) prediction_count
 FROM logr_slpm1_predictions;
 
+-- I should aggregate predictions
+SELECT MIN(prediction),AVG(prediction),MAX(prediction),COUNT(prediction) FROM logr_slpm1_predictions;
 -- bye
