@@ -25,5 +25,15 @@ cdate   text
 )
 ;
 
-
+COPY prices 
+(
+cdate   
+,openp  
+,highp  
+,lowp   
+,closep 
+,volume 
+,adjp   
+)
+from '/home/ann/madlib_demos/gspc.csv' with csv;
 
