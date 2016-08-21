@@ -76,20 +76,24 @@ WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
 DROP TABLE IF EXISTS svm_slpm1;
 DROP TABLE IF EXISTS svm_slpm1_summary;
 DROP TABLE IF EXISTS svm_slpm1_random;
+
 SELECT madlib.svm_classification(
 'traindata', -- source table
 'svm_slpm1', -- model                             
 'label',     -- labels
-'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
-'gaussian',
-'n_components=10',
-'',
-'init_stepsize=[1,0.1,0.01], max_iter=[100,200,400] n_folds=4'
-);
+'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]');
 
--- I should use the model on Aug 2016:
+-- 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
+-- 'gaussian',
+-- 'n_components=10',
+-- '',
+-- 'init_stepsize=[1,0.1,0.01], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
+-- );
+
+-- I should collect predictions of testdata
 DROP TABLE svm_slpm1_predictions;
 SELECT  madlib.svm_predict('svm_slpm1', 'testdata', 'id', 'svm_slpm1_predictions');
-SELECT prediction,count(prediction) from svm_slpm1_predictions group by prediction;
+
+select count(id),min(id),max(id) from svm_slpm1;
 
 -- bye
