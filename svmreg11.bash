@@ -7,6 +7,6 @@
 for ((year=2000; year < 2017 ; year++))
 do
   echo $year
-  echo "./psqlmad -f svmreg11.sql -v tstyr=$year -v trainyrs=30"
+  ./psqlmad -f svmreg11.sql -v tstyr=$year -v trainyrs=30
 done
 exit
