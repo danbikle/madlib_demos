@@ -67,12 +67,16 @@ ORDER BY cdate;
 
 DROP TABLE IF EXISTS traindata,testdata;
 CREATE TABLE traindata AS SELECT * FROM prices13
-WHERE extract(year from cdate) BETWEEN :tstyr -31 AND :tstyr -1; 
+WHERE extract(year from cdate) BETWEEN :tstyr -31 AND :tstyr -1;
+
+select min(cdate),max(cdate) from  traindata;
+
 --WHERE cdate BETWEEN '1987-01-01' AND '2014-12-31';
 
 -- I should extract year from command line:
 CREATE TABLE testdata AS SELECT * FROM prices13
 WHERE extract(year from cdate) = :tstyr;
 -- BETWEEN '2015-01-01' AND '2016-12-31';
+select min(cdate),max(cdate) from  testdata;
 
 -- bye

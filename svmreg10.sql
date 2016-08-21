@@ -3,7 +3,7 @@
 --
 
 -- Demo:
--- ./psqlmad -f svmreg10.sql 2016
+-- ./psqlmad -f svmreg10.sql
 
 -- This script should demonstrate SVM on GSPC (S&P 500) prices.
 
