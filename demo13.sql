@@ -32,12 +32,17 @@ cdate
 FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
 
 -- Goog: In postgres how to create lead window function?
+-- Ref:
+-- http://tapoueh.org/blog/2013/08/20-Window-Functions
+-- https://community.modeanalytics.com/sql/tutorial/sql-window-functions/
+-- https://www.postgresql.org/docs/9.3/static/functions-window.html
+-- https://www.postgresql.org/docs/9.3/static/functions-aggregate.html
 
 -- I should add column: leadp
 DROP TABLE IF EXISTS prices10;
-CREATE TABLE prices10 as
+CREATE TABLE prices10 AS
 SELECT cdate,closep,
-LEAD(closep,1)OVER(order by cdate) AS leadp
+LEAD(closep,1)OVER(ORDER BY cdate) AS leadp
 FROM  prices
 ORDER BY cdate;
 
@@ -65,4 +70,15 @@ ORDER BY cdate;
 
 SELECT * FROM prices12
 WHERE cdate+22 > (SELECT MAX(cdate) FROM prices12);
+
+-- I should add column: mvgavg_slope
+DROP TABLE IF EXISTS prices13;
+CREATE TABLE prices13 as
+SELECT cdate,closep,leadp,pctlead,
+(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope
+FROM  prices12
+ORDER BY cdate;
+
+SELECT * FROM prices13
+WHERE cdate+22 > (SELECT MAX(cdate) FROM prices13);
 
