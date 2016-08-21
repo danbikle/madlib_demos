@@ -58,4 +58,6 @@ sudo yum install apache-madlib-1.9-incubating-bin-Linux.rpm
 
 /usr/local/madlib/bin/madpack -p postgres -c madlib@127.0.0.1/madlib install
 
+/usr/local/madlib/bin/madpack -p postgres -c madlib@127.0.0.1/madlib install-check
+
 ssh ann@localhost
