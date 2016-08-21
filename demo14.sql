@@ -53,7 +53,7 @@ ORDER BY cdate;
 -- I should add column: mvgavg_slope3, mvgavg_slope4
 DROP TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
-SELECT cdate,closep,leadp,pctlead
+SELECT cdate,closep,pctlead
 ,CASE WHEN pctlead<0 THEN 0 ELSE 1 END AS label -- For Logistic Regression
 ,(mvgavg3day-LAG(mvgavg3day,1)OVER(order by cdate))/mvgavg3day AS mvgavg_slope3
 ,(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope4
