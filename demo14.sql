@@ -35,7 +35,7 @@ FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
 DROP TABLE IF EXISTS prices10;
 CREATE TABLE prices10 AS
 SELECT cdate,closep,
-100*(LEAD(closep,1)OVER(ORDER BY cdate)-closep) AS pctlead
+100*(LEAD(closep,1)OVER(ORDER BY cdate)-closep)/closep AS pctlead
 FROM  prices
 ORDER BY cdate;
 
