@@ -77,7 +77,6 @@ WHERE extract(year from cdate) = :tstyr;
 
 select min(cdate),max(cdate) from  testdata;
 
-
 -- I should create a model which assumes that pctlead depends on mvgavg_slope:
 DROP TABLE IF EXISTS svm_slpm2;
 DROP TABLE IF EXISTS svm_slpm2_summary;
@@ -117,8 +116,8 @@ GROUP BY SIGN(prediction);
 SELECT SUM(pctlead) AS lo_effectiveness,
 COUNT(cdate) prediction_count
 FROM prices13
-WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
- 
+WHERE extract(year from cdate) = :tstyr; 
+
 -- I should report model accuracy:
 SELECT
 SIGN(prediction)*SIGN(pctlead) true_or_false
