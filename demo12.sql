@@ -10,20 +10,22 @@
 
 -- This script should demonstrate Linear Regression.
 
-
 -- Goog: In postgres how to copy CSV file into table?
 DROP TABLE IF EXISTS prices;
 CREATE TABLE prices
 (
-cdate   text
-,openp  text
-,highp  text
-,lowp   text
-,closep text
-,volume text
-,adjp   text
+cdate   date
+,openp  float
+,highp  float
+,lowp   float
+,closep float
+,volume float
+,adjp   float
 )
 ;
+
+-- Ref:
+-- https://www.postgresql.org/docs/9.3/static/sql-copy.html
 
 COPY prices 
 (
@@ -35,5 +37,15 @@ cdate
 ,volume 
 ,adjp   
 )
-from '/home/ann/madlib_demos/gspc.csv' with csv;
+FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
+
+-- I should create a table of 2016 prices:
+DROP TABLE IF EXISTS prices2016;
+CREATE TABLE prices2016 as
+SELECT cdate,closep 
+FROM  prices
+WHERE cdate BETWEEN '2016-01-01' AND '2016-12-31'
+ORDER BY cdate;
+
+SELECT * FROM prices2016;
 
