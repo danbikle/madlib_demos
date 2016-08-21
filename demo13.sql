@@ -97,4 +97,31 @@ CORR(mvgavg_slope10,pctlead) corr_sp10
 FROM prices13;
 -- Does pctlead depend on mvgavg_slope?
 
+-- I should drill down into each year.
+-- Goog: In postgres how to extract year from date?
+-- https://www.postgresql.org/docs/9.3/static/functions-datetime.html#FUNCTIONS-DATETIME-TABLE
+-- https://www.postgresql.org/docs/9.3/static/functions-datetime.html#FUNCTIONS-DATETIME-EXTRACT
+SELECT
+extract(year from cdate)     yr,
+CORR(mvgavg_slope3,pctlead)  corr_sp3,
+CORR(mvgavg_slope4,pctlead)  corr_sp4,
+CORR(mvgavg_slope5,pctlead)  corr_sp5,
+CORR(mvgavg_slope10,pctlead) corr_sp10
+FROM prices13
+GROUP BY extract(year from cdate)
+ORDER BY extract(year from cdate)
+;
+
+-- Using Linear Regression,
+-- I should learn from 1987 through 2014 and 
+-- try to predict each day of 2015,2016.
+
+DROP TABLE IF EXISTS traindata;
+CREATE TABLE traindata AS SELECT * FROM prices13
+WHERE cdate BETWEEN '1987-01-01' AND '2014-12-31';
+
+CREATE TABLE testdata AS SELECT * FROM prices13
+WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
+
+
 -- bye
