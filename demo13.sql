@@ -153,10 +153,28 @@ SELECT SUM(pctlead) AS lo_effectiveness,
 COUNT(cdate) prediction_count
 FROM linr_slpm1_predictions;
 
+-- Long Only Accuracy
+SELECT COUNT(cdate)lo_tp FROM linr_slpm1_predictions WHERE pctlead>0;
+
 -- I should report model effectiveness:
 SELECT
 SUM(SIGN(prediction)*pctlead) AS effectiveness,
 COUNT(cdate) prediction_count
 FROM linr_slpm1_predictions;
+
+SELECT
+SIGN(prediction) sgn,
+SUM(SIGN(prediction)*pctlead) AS effectiveness,
+COUNT(cdate) prediction_count
+FROM linr_slpm1_predictions
+GROUP BY SIGN(prediction);
+
+-- I should report accuracy.
+-- True:
+SELECT COUNT(cdate)tp FROM linr_slpm1_predictions WHERE prediction>0 AND pctlead>0;
+SELECT COUNT(cdate)tn FROM linr_slpm1_predictions WHERE prediction<0AND pctlead<0;
+-- False:
+SELECT COUNT(cdate)fp FROM linr_slpm1_predictions WHERE prediction>0 AND pctlead<0;
+SELECT COUNT(cdate)fn FROM linr_slpm1_predictions WHERE prediction<0 AND pctlead>0;
 
 -- bye
