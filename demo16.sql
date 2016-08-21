@@ -84,8 +84,9 @@ SELECT madlib.svm_regression(
 'gaussian',
 'n_components=10',
 '',
-'init_stepsize=[1,0.1,0.01], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
+'init_stepsize=[1,0.1,0.01], max_iter=77, n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
 );
+-- 'init_stepsize=[1,0.1,0.01], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
 
 -- I should collect predictions of testdata
 DROP TABLE svm_slpm2_predictions;
