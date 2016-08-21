@@ -1,0 +1,45 @@
+results.txt
+
+maybe tgtbt:
+./psqlmad -f demo16.sql
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 27.2712209280075 |              412
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+   -1 | 9.73466957137126 |              128
+    1 | 17.5365513566363 |              284
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 7.80188178526499 |              412
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           56
+            -1 |          1 |          132
+             1 |         -1 |           72
+             1 |          1 |          151
+               |          1 |            1
+(5 rows)
+
+[ann@cen7 madlib_demos]$ 
+
+
+not good:
+./psqlmad -f demo17.sql
+   effectiveness   | prediction_count 
+-------------------+------------------
+ -25.2293377414518 |              412
+(1 row)
+
+ sign |   effectiveness   | prediction_count 
+------+-------------------+------------------
+   -1 | -16.5156097633584 |              152
+    1 | -8.71372797809338 |              260
+(2 rows)
