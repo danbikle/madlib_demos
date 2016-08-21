@@ -123,7 +123,12 @@ GROUP BY SIGN(prediction-0.5);
 -- I should aggregate predictions
 SELECT MIN(prediction),AVG(prediction),MAX(prediction),COUNT(prediction) FROM logr_slpm1_predictions;
 
--- I should report accuracy:
+-- I should report accuracy.
+-- True:
 SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead>0;
+SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead<0;
+-- False:
+SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead<0;
+SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead>0;
 
 -- bye
