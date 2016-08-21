@@ -73,23 +73,40 @@ CREATE TABLE testdata AS SELECT * FROM prices13
 WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
 
 -- I should create a model which assumes that pctlead depends on mvgavg_slope:
-DROP TABLE IF EXISTS svm_slpm1;
-DROP TABLE IF EXISTS svm_slpm1_summary;
-DROP TABLE IF EXISTS svm_slpm1_random;
+DROP TABLE IF EXISTS svm_slpm2;
+DROP TABLE IF EXISTS svm_slpm2_summary;
+DROP TABLE IF EXISTS svm_slpm2_random;
 SELECT madlib.svm_regression(
 'traindata', -- source table
-'svm_slpm1', -- model                             
+'svm_slpm2', -- model                             
 'pctlead',   -- dependent variabl
 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
 'gaussian',
 'n_components=10',
 '',
-'init_stepsize=[1,0.1,0.01], max_iter=[100,200,400] n_folds=4'
+'init_stepsize=[1,0.1,0.01], max_iter=[100,200], n_folds=30, lambda=[0.01,0.02, 0.04], epsilon=[0.01, 0.02, 0.04]'
 );
 
--- I should use the model on Aug 2016:
-DROP TABLE svm_slpm1_predictions;
-SELECT  madlib.svm_predict('svm_slpm1', 'testdata', 'id', 'svm_slpm1_predictions');
-SELECT prediction,count(prediction) from svm_slpm1_predictions group by prediction;
+-- I should collect predictions of testdata
+DROP TABLE svm_slpm2_predictions;
+SELECT  madlib.svm_predict('svm_slpm2', 'testdata', 'id', 'svm_slpm2_predictions');
+
+-- I should report model effectiveness:
+SELECT
+SUM(SIGN(prediction)*pctlead) AS effectiveness,
+COUNT(id) prediction_count
+FROM svm_slpm2_predictions;
+
+SELECT
+SIGN(prediction) sgn,
+SUM(SIGN(prediction)*pctlead) AS effectiveness,
+COUNT(id) prediction_count
+FROM svm_slpm2_predictions
+GROUP BY SIGN(prediction);
+
+-- I should report long-only effectiveness:
+SELECT SUM(pctlead) AS lo_effectiveness,
+COUNT(cdate) prediction_count
+FROM prices10;
 
 -- bye
