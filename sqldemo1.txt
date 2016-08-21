@@ -1,24 +1,25 @@
+sqldemo1.txt
+
+
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ ./psqlmad -af sqldemo1.sql
 --
 -- sqldemo1.sql
 --
-
 -- Demo:
 -- ./psqlmad -af sqldemo1.sql
-
 -- This script should demonstrate some SQL syntax.
-
 -- CCLUD is an acronym for verbs.
 -- Verbs: Create, Copy, List, Update, Delete
 -- A verb is a concept, SQL implements the concept with simple commands.
-
 -- SQL commands: CREATE, SELECT, INSERT, UPDATE, DROP, DELETE, TRUNCATE
-
 -- The verbs operate on nouns.
 -- Nouns: Table, Row
-
 -- Usually SQL is case insensitive.
 -- Sometimes words are in uppercase but they dont need to be:
 DROP   TABLE IF EXISTS prices;
+DROP TABLE
 CREATE TABLE prices
 (
 cdate   date
@@ -29,14 +30,18 @@ cdate   date
 ,volume float
 ,adjp   float
 );
+CREATE TABLE
 -- A table is like a variable.
 -- It has a name and it holds data.
 -- A table is like a spreadsheet.
 -- It has rows and columns.
 -- Currently the prices table has 7 columns and 0 rows.
-
 -- Count the rows in prices:
 SELECT COUNT(cdate) FROM prices;
+ count 
+-------
+     0
+(1 row)
 
 -- I should copy rows from gspc.csv file into prices table.
 -- The COPY command is not SQL syntax.
@@ -52,88 +57,166 @@ cdate
 ,adjp   
 )
 FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
+COPY 16767
 -- Now the prices table has many rows.
-
 -- List count of rows in prices:
 SELECT COUNT(cdate) FROM prices;
-SELECT COUNT(lowp)  FROM prices;
-SELECT COUNT(*)     FROM prices;
--- To count rows I need to list a column or just list a *.
+ count 
+-------
+ 16767
+(1 row)
 
+SELECT COUNT(lowp)  FROM prices;
+ count 
+-------
+ 16767
+(1 row)
+
+SELECT COUNT(*)     FROM prices;
+ count 
+-------
+ 16767
+(1 row)
+
+-- To count rows I need to list a column or just list a *.
 -- List some minimum column values in prices:
 SELECT MIN(cdate),MIN(closep),MIN(volume) FROM prices;
+    min     |  min  |  min   
+------------+-------+--------
+ 1950-01-03 | 16.66 | 680000
+(1 row)
 
 -- List some maximum and average column values in prices:
 SELECT MAX(closep),MAX(volume), AVG(closep),AVG(volume) FROM prices;
+     max     |     max     |       avg        |       avg        
+-------------+-------------+------------------+------------------
+ 2190.149902 | 11456230400 | 499.203016610601 | 827902419.490666
+(1 row)
 
 -- List all columns of one row in prices:
 SELECT * FROM prices WHERE cdate = (SELECT MAX(cdate) FROM prices);
+   cdate    |   openp    | highp |    lowp     |   closep    |   volume   |    adjp     
+------------+------------+-------+-------------+-------------+------------+-------------
+ 2016-08-19 | 2184.23999 |  2185 | 2175.129883 | 2183.870117 | 3084800000 | 2183.870117
+(1 row)
 
 -- List some columns of a row in prices:
 SELECT cdate,closep FROM prices WHERE cdate = (SELECT MAX(cdate)-1 FROM prices);
+   cdate    |   closep   
+------------+------------
+ 2016-08-18 | 2187.02002
+(1 row)
 
 -- List some columns of some rows in prices:
 SELECT cdate,closep FROM prices WHERE cdate > (SELECT MAX(cdate)-10 FROM prices);
--- SQL is like Pandas. Constrain columns first, then constrain rows.
+   cdate    |   closep    
+------------+-------------
+ 2016-08-19 | 2183.870117
+ 2016-08-18 |  2187.02002
+ 2016-08-17 | 2182.219971
+ 2016-08-16 | 2178.149902
+ 2016-08-15 | 2190.149902
+ 2016-08-12 | 2184.050049
+ 2016-08-11 | 2185.790039
+ 2016-08-10 |  2175.48999
+(8 rows)
 
+-- SQL is like Pandas. Constrain columns first, then constrain rows.
 -- List some columns of some rows in prices and order by closep
 SELECT cdate,closep
 FROM prices 
 WHERE cdate > (SELECT MAX(cdate)-10 FROM prices)
 ORDER BY closep
 ;
+   cdate    |   closep    
+------------+-------------
+ 2016-08-10 |  2175.48999
+ 2016-08-16 | 2178.149902
+ 2016-08-17 | 2182.219971
+ 2016-08-19 | 2183.870117
+ 2016-08-12 | 2184.050049
+ 2016-08-11 | 2185.790039
+ 2016-08-18 |  2187.02002
+ 2016-08-15 | 2190.149902
+(8 rows)
 
 -- List max closep using inline-view:
 SELECT max(closep)     FROM
   (SELECT cdate,closep FROM prices WHERE cdate > (SELECT MAX(cdate)-10 FROM prices)) iv;
+     max     
+-------------
+ 2190.149902
+(1 row)
 
 -- Create table from table:
 DROP   TABLE IF EXISTS prices2;
+DROP TABLE
 CREATE TABLE prices2 AS SELECT cdate,openp,closep FROM prices WHERE cdate > '2016-08-08';
-
+SELECT 9
 -- Create table from table, column from columns:
 DROP   TABLE IF EXISTS prices3;
+DROP TABLE
 CREATE TABLE prices3 AS SELECT cdate,openp,closep, closep - openp AS diff FROM prices2;
-
+SELECT 9
 -- Copy rows from table to table:
 INSERT INTO prices3
 SELECT cdate,openp,closep, closep - openp AS diff FROM prices
 WHERE cdate = '2016-08-01';
-
+INSERT 0 1
 -- Copy rows from table to table2 where rows not in table2 already:
 INSERT INTO prices3
 SELECT cdate,openp,closep, closep - openp AS diff FROM prices
 WHERE  cdate BETWEEN '2016-08-01' AND '2016-08-31'
 AND    cdate NOT IN (SELECT cdate FROM prices3);
-
+INSERT 0 5
 -- Update all rows of a column:
 UPDATE prices3 SET diff = 0;
-
+UPDATE 15
 -- Update some rows of a column:
 UPDATE prices3 SET diff = 1 WHERE cdate = '2016-08-01';
-
+UPDATE 1
 -- Update column using other columns:
 UPDATE prices3 SET diff = closep - openp;
-
+UPDATE 15
 -- Delete a row:
 DELETE FROM prices3 WHERE cdate = '2016-08-01';
-
+DELETE 1
 -- Delete some rows:
 DELETE FROM prices3 WHERE cdate < '2016-08-10';
-
+DELETE 6
 -- Delete all rows:
 SELECT COUNT(*) FROM prices3; 
+ count 
+-------
+     8
+(1 row)
+
 DELETE          FROM prices3;
+DELETE 8
 SELECT COUNT(*) FROM prices3; 
+ count 
+-------
+     0
+(1 row)
 
 -- Delete all rows using TRUNCATE:
 SELECT COUNT(*) FROM prices2;
-TRUNCATE             prices2;
-SELECT COUNT(*) FROM prices2;
+ count 
+-------
+     9
+(1 row)
 
+TRUNCATE             prices2;
+TRUNCATE TABLE
+SELECT COUNT(*) FROM prices2;
+ count 
+-------
+     0
+(1 row)
 
 -- GROUP BY
 DROP   TABLE IF EXISTS prices4;
+DROP TABLE
 CREATE TABLE prices4 AS 
 SELECT
 extract(year from cdate) yr
@@ -141,15 +224,77 @@ extract(year from cdate) yr
 ,closep
 FROM prices
 WHERE extract(year from cdate) > 1999;
-
+SELECT 4185
 SELECT yr, COUNT(yr) FROM prices4 GROUP BY yr;
+  yr  | count 
+------+-------
+ 2014 |   252
+ 2004 |   252
+ 2003 |   252
+ 2015 |   252
+ 2001 |   248
+ 2012 |   250
+ 2013 |   252
+ 2006 |   251
+ 2008 |   253
+ 2011 |   252
+ 2009 |   252
+ 2002 |   252
+ 2000 |   252
+ 2007 |   251
+ 2010 |   252
+ 2016 |   160
+ 2005 |   252
+(17 rows)
 
 -- GROUP BY ORDER BY
 SELECT yr, COUNT(yr) FROM prices4 GROUP BY yr ORDER BY yr;
+  yr  | count 
+------+-------
+ 2000 |   252
+ 2001 |   248
+ 2002 |   252
+ 2003 |   252
+ 2004 |   252
+ 2005 |   252
+ 2006 |   251
+ 2007 |   251
+ 2008 |   253
+ 2009 |   252
+ 2010 |   252
+ 2011 |   252
+ 2012 |   250
+ 2013 |   252
+ 2014 |   252
+ 2015 |   252
+ 2016 |   160
+(17 rows)
+
 SELECT yr, COUNT(yr) FROM prices4 GROUP BY yr ORDER BY COUNT(yr);
+  yr  | count 
+------+-------
+ 2016 |   160
+ 2001 |   248
+ 2012 |   250
+ 2006 |   251
+ 2007 |   251
+ 2011 |   252
+ 2009 |   252
+ 2002 |   252
+ 2000 |   252
+ 2010 |   252
+ 2014 |   252
+ 2004 |   252
+ 2003 |   252
+ 2015 |   252
+ 2013 |   252
+ 2005 |   252
+ 2008 |   253
+(17 rows)
 
 -- Window Functions (5 Day Moving Average)
 DROP   TABLE IF EXISTS prices5;
+DROP TABLE
 CREATE TABLE prices5 AS 
 SELECT
 cdate
@@ -158,11 +303,29 @@ cdate
 FROM prices
 WHERE cdate > '2016-08-01'
 ORDER BY cdate;
-
+SELECT 14
 SELECT * FROM prices5 WHERE cdate BETWEEN '2016-08-01' AND '2016-08-31' ORDER BY cdate;
+   cdate    |   closep    |    mvgavg5day    
+------------+-------------+------------------
+ 2016-08-02 | 2157.030029 |      2157.030029
+ 2016-08-03 | 2163.790039 |      2160.410034
+ 2016-08-04 |     2164.25 | 2161.69002266667
+ 2016-08-05 | 2182.870117 |    2166.98504625
+ 2016-08-08 | 2180.889893 |     2169.7660156
+ 2016-08-09 |  2181.73999 |     2174.7080078
+ 2016-08-10 |  2175.48999 |      2177.047998
+ 2016-08-11 | 2185.790039 |     2181.3560058
+ 2016-08-12 | 2184.050049 |     2181.5919922
+ 2016-08-15 | 2190.149902 |      2183.443994
+ 2016-08-16 | 2178.149902 |     2182.7259764
+ 2016-08-17 | 2182.219971 |     2184.0719726
+ 2016-08-18 |  2187.02002 |     2184.3179688
+ 2016-08-19 | 2183.870117 |     2184.2819824
+(14 rows)
 
 -- The End.
 -- Questions?
 -- e-me: bikle101@gmail.com
-
-
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ 
