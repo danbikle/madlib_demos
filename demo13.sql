@@ -60,25 +60,41 @@ ORDER BY cdate;
 SELECT * FROM prices11
 WHERE cdate+11 > (SELECT MAX(cdate) FROM prices11);
 
--- I should add column: mvgavg4day
+-- I should add column: mvgavg3day,mvgavg4day,mvgavg5day,mvgavg10day
 DROP TABLE IF EXISTS prices12;
 CREATE TABLE prices12 as
 SELECT cdate,closep,leadp,pctlead,
-AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) AS mvgavg4day
+AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS mvgavg3day,
+AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 3 PRECEDING AND CURRENT ROW) AS mvgavg4day,
+AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 4 PRECEDING AND CURRENT ROW) AS mvgavg5day,
+AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS mvgavg10day
 FROM  prices11
 ORDER BY cdate;
 
 SELECT * FROM prices12
 WHERE cdate+22 > (SELECT MAX(cdate) FROM prices12);
 
--- I should add column: mvgavg_slope
+-- I should add column: mvgavg_slope3, mvgavg_slope4
 DROP TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
 SELECT cdate,closep,leadp,pctlead,
-(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope
+(mvgavg3day-LAG(mvgavg3day,1)OVER(order by cdate))/mvgavg3day AS mvgavg_slope3,
+(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope4,
+(mvgavg5day-LAG(mvgavg5day,1)OVER(order by cdate))/mvgavg5day AS mvgavg_slope5,
+(mvgavg10day-LAG(mvgavg10day,1)OVER(order by cdate))/mvgavg10day AS mvgavg_slope10
 FROM  prices12
 ORDER BY cdate;
 
 SELECT * FROM prices13
 WHERE cdate+22 > (SELECT MAX(cdate) FROM prices13);
 
+-- I should look for correlation tween mvgavg_slope and pctlead:
+SELECT
+CORR(mvgavg_slope3,pctlead) corr_sp3,
+CORR(mvgavg_slope4,pctlead) corr_sp4,
+CORR(mvgavg_slope5,pctlead) corr_sp5,
+CORR(mvgavg_slope10,pctlead) corr_sp10
+FROM prices13;
+-- Does pctlead depend on mvgavg_slope?
+
+-- bye
