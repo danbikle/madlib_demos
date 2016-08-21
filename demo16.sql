@@ -1,9 +1,9 @@
 --
--- demo15.sql
+-- demo16.sql
 --
 
 -- Demo:
--- ./psqlmad -f demo15.sql
+-- ./psqlmad -f demo16.sql
 
 -- This script should demonstrate SVM on GSPC (S&P 500) prices.
 
@@ -76,10 +76,10 @@ WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
 DROP TABLE IF EXISTS svm_slpm1;
 DROP TABLE IF EXISTS svm_slpm1_summary;
 DROP TABLE IF EXISTS svm_slpm1_random;
-SELECT madlib.svm_classification(
+SELECT madlib.svm_regression(
 'traindata', -- source table
 'svm_slpm1', -- model                             
-'label',     -- labels
+'pctlead',   -- dependent variabl
 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
 'gaussian',
 'n_components=10',
