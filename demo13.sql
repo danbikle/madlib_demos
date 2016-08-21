@@ -121,7 +121,7 @@ CREATE TABLE traindata AS SELECT * FROM prices13
 WHERE cdate BETWEEN '1987-01-01' AND '2014-12-31';
 
 CREATE TABLE testdata AS SELECT * FROM prices13
-WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
+WHERE cdate BETWEEN '2016-01-01' AND '2016-12-31';
 
 -- I should create a model which assumes that pctlead depends on mvgavg_slope:
 DROP TABLE IF EXISTS slopemodel;
@@ -131,6 +131,26 @@ SELECT madlib.linregr_train( 'traindata',
                              'pctlead',
                              'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]'
                            );
+
+-- I should use the model on Aug 2016:
+SELECT cdate,pctlead,
+madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10],coef) AS prediction 
+FROM testdata,slopemodel
+WHERE cdate BETWEEN '2016-08-01' AND '2016-08-31'
+ORDER BY cdate;
+
+-- I should use the model on testdata
+DROP TABLE IF EXISTS slopemodel_predictions;
+CREATE TABLE slopemodel_predictions AS
+SELECT cdate,pctlead,
+madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10],coef) AS prediction 
+FROM testdata,slopemodel
+ORDER BY cdate;
+
+SELECT MIN(prediction),MAX(prediction) FROM slopemodel_predictions;
+
+-- I should report long-only effectiveness:
+SELECT SUM(pctlead) AS lo_effectiveness FROM slopemodel_predictions;
 
 
 -- bye
