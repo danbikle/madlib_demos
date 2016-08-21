@@ -4,7 +4,7 @@
 
 -- http://madlib.incubator.apache.org/docs/latest/group__grp__linreg.html
 
-DROP   TABLE houses;
+DROP TABLE IF EXISTS houses;
 CREATE TABLE houses (id INT, tax INT, bedroom INT, bath FLOAT, price INT,
             size INT, lot INT);
 COPY houses FROM STDIN WITH DELIMITER '|';
@@ -27,10 +27,8 @@ COPY houses FROM STDIN WITH DELIMITER '|';
 
 -- Train a regression model. First, a single regression for all the data.
 
-drop table houses_linregr;
-drop table houses_linregr_summary;
-drop table houses_linregr_bedroom;
-drop table houses_linregr_bedroom_summary;
+DROP TABLE IF EXISTS houses_linregr,houses_linregr_summary;
+DROP TABLE IF EXISTS houses_linregr_bedroom,houses_linregr_bedroom_summary;
 
 SELECT madlib.linregr_train( 'houses',
                              'houses_linregr',
