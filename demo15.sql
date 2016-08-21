@@ -53,7 +53,7 @@ ORDER BY cdate;
 -- I should add column: mvgavg_slope3, mvgavg_slope4
 DROP TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
-SELECT cdate,closep,pctlead
+SELECT cdate,closep,pctlead,row_number()OVER(ORDER BY cdate) AS id
 ,CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label -- For classification
 ,(mvgavg3day-LAG(mvgavg3day,1)OVER(order by cdate))/mvgavg3day AS mvgavg_slope3
 ,(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope4
@@ -75,6 +75,7 @@ WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
 -- I should create a model which assumes that pctlead depends on mvgavg_slope:
 DROP TABLE IF EXISTS svm_slpm1;
 DROP TABLE IF EXISTS svm_slpm1_summary;
+DROP TABLE IF EXISTS svm_slpm1_random;
 SELECT madlib.svm_classification(
 'traindata', -- source table
 'svm_slpm1', -- model                             
@@ -83,13 +84,12 @@ SELECT madlib.svm_classification(
 'gaussian',
 'n_components=10',
 '',
-'init_stepsize=1, max_iter=200'
+'init_stepsize=1, max_iter=400'
 );
 
 -- I should use the model on Aug 2016:
 DROP TABLE svm_slpm1_predictions;
-SELECT  madlib.svm_predict('svm_slpm1', 'testdata', 'cdate', 'svm_slpm1_predictions');
-SELECT * FROM svm_slpm1_predictions WHERE cdate > '2016-08-01';
+SELECT  madlib.svm_predict('svm_slpm1', 'testdata', 'id', 'svm_slpm1_predictions');
 SELECT prediction,count(prediction) from svm_slpm1_predictions group by prediction;
 
 -- bye
