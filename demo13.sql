@@ -116,12 +116,21 @@ ORDER BY extract(year from cdate)
 -- I should learn from 1987 through 2014 and 
 -- try to predict each day of 2015,2016.
 
-DROP TABLE IF EXISTS traindata;
+DROP TABLE IF EXISTS traindata,testdata;
 CREATE TABLE traindata AS SELECT * FROM prices13
 WHERE cdate BETWEEN '1987-01-01' AND '2014-12-31';
 
 CREATE TABLE testdata AS SELECT * FROM prices13
 WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
+
+-- I should create a model which assumes that pctlead depends on mvgavg_slope:
+DROP TABLE IF EXISTS slopemodel;
+DROP TABLE IF EXISTS slopemodel_summary;
+SELECT madlib.linregr_train( 'traindata',
+                             'slopemodel',
+                             'pctlead',
+                             'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]'
+                           );
 
 
 -- bye
