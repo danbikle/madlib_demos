@@ -125,10 +125,10 @@ SELECT MIN(prediction),AVG(prediction),MAX(prediction),COUNT(prediction) FROM lo
 
 -- I should report accuracy.
 -- True:
-SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead>0;
-SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead<0;
+SELECT COUNT(cdate)tp FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead>0;
+SELECT COUNT(cdate)tn FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead<0;
 -- False:
-SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead<0;
-SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead>0;
+SELECT COUNT(cdate)fp FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead<0;
+SELECT COUNT(cdate)fn FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead>0;
 
 -- bye
