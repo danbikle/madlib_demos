@@ -94,6 +94,6 @@ SELECT madlib.svm_classification(
 DROP TABLE svm_slpm1_predictions;
 SELECT  madlib.svm_predict('svm_slpm1', 'testdata', 'id', 'svm_slpm1_predictions');
 
-select count(id),min(id),max(id) from svm_slpm1;
+select count(id),min(id),max(id) from svm_slpm1_predictions;
 
 -- bye
