@@ -5,7 +5,8 @@
 -- Demo:
 -- ./psqlmad -f demo13.sql
 
--- This script should demonstrate window functions.
+-- This script should demonstrate window functions,
+-- and madlib Linear Regression on GSPC (S&P 500) prices.
 
 DROP TABLE IF EXISTS prices;
 CREATE TABLE prices
@@ -121,13 +122,13 @@ CREATE TABLE traindata AS SELECT * FROM prices13
 WHERE cdate BETWEEN '1987-01-01' AND '2014-12-31';
 
 CREATE TABLE testdata AS SELECT * FROM prices13
-WHERE cdate BETWEEN '2016-01-01' AND '2016-12-31';
+WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
 
 -- I should create a model which assumes that pctlead depends on mvgavg_slope:
-DROP TABLE IF EXISTS slopemodel;
-DROP TABLE IF EXISTS slopemodel_summary;
+DROP TABLE IF EXISTS linr_slpm1;
+DROP TABLE IF EXISTS linr_slpm1_summary;
 SELECT madlib.linregr_train( 'traindata',
-                             'slopemodel',
+                             'linr_slpm1',
                              'pctlead',
                              'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]'
                            );
@@ -135,22 +136,27 @@ SELECT madlib.linregr_train( 'traindata',
 -- I should use the model on Aug 2016:
 SELECT cdate,pctlead,
 madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10],coef) AS prediction 
-FROM testdata,slopemodel
+FROM testdata,linr_slpm1
 WHERE cdate BETWEEN '2016-08-01' AND '2016-08-31'
 ORDER BY cdate;
 
 -- I should use the model on testdata
-DROP TABLE IF EXISTS slopemodel_predictions;
-CREATE TABLE slopemodel_predictions AS
+DROP TABLE IF EXISTS linr_slpm1_predictions;
+CREATE TABLE linr_slpm1_predictions AS
 SELECT cdate,pctlead,
 madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10],coef) AS prediction 
-FROM testdata,slopemodel
+FROM testdata,linr_slpm1
 ORDER BY cdate;
 
-SELECT MIN(prediction),MAX(prediction) FROM slopemodel_predictions;
-
 -- I should report long-only effectiveness:
-SELECT SUM(pctlead) AS lo_effectiveness FROM slopemodel_predictions;
+SELECT SUM(pctlead) AS lo_effectiveness,
+COUNT(cdate) prediction_count
+FROM linr_slpm1_predictions;
 
+-- I should report model effectiveness:
+SELECT
+SUM(SIGN(prediction)*pctlead) AS effectiveness,
+COUNT(cdate) prediction_count
+FROM linr_slpm1_predictions;
 
 -- bye
