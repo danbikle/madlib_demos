@@ -1,5 +1,43 @@
 results.txt
 
+./psqlmad -f demo13.sql
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 7.80188178526499 |              412
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 11.3934960848485 |              412
+(1 row)
+
+ sgn |  effectiveness   | prediction_count 
+-----+------------------+------------------
+  -1 | 1.79580714979178 |              112
+   1 | 9.59768893505677 |              300
+(2 rows)
+
+
+./psqlmad -f demo14.sql
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 7.80188178526499 |              412
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 13.1453979145874 |              412
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+   -1 |  2.6717580646612 |               54
+    1 | 10.4736398499262 |              358
+(2 rows)
+
+
 maybe tgtbt:
 ./psqlmad -f demo16.sql
 
