@@ -94,20 +94,32 @@ SELECT  madlib.svm_predict('svm_slpm2', 'testdata', 'id', 'svm_slpm2_predictions
 -- I should report model effectiveness:
 SELECT
 SUM(SIGN(prediction)*pctlead) AS effectiveness,
-COUNT(id) prediction_count
-FROM svm_slpm2_predictions;
+COUNT(cdate) prediction_count
+FROM prices13 a,svm_slpm2_predictions b
+WHERE a.id = b.id;
 
 SELECT
-SIGN(prediction) sgn,
+SIGN(prediction),
 SUM(SIGN(prediction)*pctlead) AS effectiveness,
-COUNT(id) prediction_count
-FROM svm_slpm2_predictions
+COUNT(cdate) prediction_count
+FROM prices13 a,svm_slpm2_predictions b
+WHERE a.id = b.id
 GROUP BY SIGN(prediction);
 
 -- I should report long-only effectiveness:
 SELECT SUM(pctlead) AS lo_effectiveness,
 COUNT(cdate) prediction_count
-FROM prices10
+FROM prices13
 WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
+ 
+-- I should report model accuracy:
+SELECT
+SIGN(prediction)*SIGN(pctlead) true_or_false
+,SIGN(prediction)              pos_or_neg
+,COUNT(cdate)                  observations
+FROM prices13 a,svm_slpm2_predictions b
+WHERE a.id = b.id
+GROUP BY SIGN(prediction)*SIGN(pctlead), SIGN(prediction)
+ORDER BY SIGN(prediction)*SIGN(pctlead), SIGN(prediction)
 
 -- bye
