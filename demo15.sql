@@ -54,7 +54,7 @@ ORDER BY cdate;
 DROP TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
 SELECT cdate,closep,pctlead
-,CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label -- For Logistic Regression
+,CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label -- For classification
 ,(mvgavg3day-LAG(mvgavg3day,1)OVER(order by cdate))/mvgavg3day AS mvgavg_slope3
 ,(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope4
 ,(mvgavg5day-LAG(mvgavg5day,1)OVER(order by cdate))/mvgavg5day AS mvgavg_slope5
@@ -62,7 +62,6 @@ SELECT cdate,closep,pctlead
 FROM  prices12
 ORDER BY cdate;
 
--- Using Logistic Regression,
 -- I should learn from 1987 through 2014 and 
 -- try to predict each day of 2015,2016.
 
@@ -80,13 +79,17 @@ SELECT madlib.svm_classification(
 'traindata', -- source table
 'svm_slpm1', -- model                             
 'label',     -- labels
-'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]' -- features
+'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
+'gaussian',
+'n_components=10',
+'',
+'init_stepsize=1, max_iter=200'
 );
-
 
 -- I should use the model on Aug 2016:
 DROP TABLE svm_slpm1_predictions;
 SELECT  madlib.svm_predict('svm_slpm1', 'testdata', 'cdate', 'svm_slpm1_predictions');
-
+SELECT * FROM svm_slpm1_predictions WHERE cdate > '2016-08-01';
+SELECT prediction,count(prediction) from svm_slpm1_predictions group by prediction;
 
 -- bye
