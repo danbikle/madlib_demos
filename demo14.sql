@@ -54,7 +54,7 @@ ORDER BY cdate;
 DROP TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
 SELECT cdate,closep,pctlead
-,CASE WHEN pctlead<0 THEN 0 ELSE 1 END AS label -- For Logistic Regression
+,CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label -- For Logistic Regression
 ,(mvgavg3day-LAG(mvgavg3day,1)OVER(order by cdate))/mvgavg3day AS mvgavg_slope3
 ,(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope4
 ,(mvgavg5day-LAG(mvgavg5day,1)OVER(order by cdate))/mvgavg5day AS mvgavg_slope5
@@ -113,11 +113,17 @@ SUM(SIGN(prediction-0.5)*pctlead) AS effectiveness,
 COUNT(cdate) prediction_count
 FROM logr_slpm1_predictions;
 
+SELECT
+SIGN(prediction-0.5),
+SUM(SIGN(prediction-0.5)*pctlead) AS effectiveness,
+COUNT(cdate) prediction_count
+FROM logr_slpm1_predictions
+GROUP BY SIGN(prediction-0.5);
+
 -- I should aggregate predictions
 SELECT MIN(prediction),AVG(prediction),MAX(prediction),COUNT(prediction) FROM logr_slpm1_predictions;
 
-SELECT
-SIGN(prediction-0.5) sgn, COUNT(SIGN(prediction-0.5)) ccount
-FROM logr_slpm1_predictions
-GROUP BY SIGN(prediction-0.5);
+-- I should report accuracy:
+SELECT COUNT(cdate) FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead>0;
+
 -- bye
