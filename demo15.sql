@@ -81,14 +81,12 @@ SELECT madlib.svm_classification(
 'traindata', -- source table
 'svm_slpm1', -- model                             
 'label',     -- labels
-'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]');
-
--- 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
--- 'gaussian',
--- 'n_components=10',
--- '',
--- 'init_stepsize=[1,0.1,0.01], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
--- );
+'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
+'gaussian',
+'n_components=10',
+'',
+'init_stepsize=[1,0.1,0.01], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
+);
 
 -- I should collect predictions of testdata
 DROP TABLE svm_slpm1_predictions;
