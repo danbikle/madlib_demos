@@ -5,7 +5,6 @@
 -- Demo:
 -- ./psqlmad -f demo10.sql
 
-
 -- ref:
 -- https://cwiki.apache.org/confluence/display/MADLIB/Quick+Start+Guide+for+Users
 -- http://faculty.cas.usf.edu/mbrannick/regression/Logistic.html

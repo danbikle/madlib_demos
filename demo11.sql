@@ -2,7 +2,13 @@
 -- demo11.sql
 --
 
+-- Demo:
+-- ./psqlmad -f demo11.sql
+
+-- Ref:
 -- http://madlib.incubator.apache.org/docs/latest/group__grp__linreg.html
+
+-- This script should demonstrate Linear Regression.
 
 DROP TABLE IF EXISTS houses;
 CREATE TABLE houses (id INT, tax INT, bedroom INT, bath FLOAT, price INT,
