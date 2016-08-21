@@ -53,12 +53,12 @@ ORDER BY cdate;
 -- I should add column: mvgavg_slope3, mvgavg_slope4
 DROP TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
-SELECT cdate,closep,leadp,pctlead,
-CASE WHEN pctlead<0 THEN 0 ELSE 1 END AS label -- For Logistic Regression
-(mvgavg3day-LAG(mvgavg3day,1)OVER(order by cdate))/mvgavg3day AS mvgavg_slope3,
-(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope4,
-(mvgavg5day-LAG(mvgavg5day,1)OVER(order by cdate))/mvgavg5day AS mvgavg_slope5,
-(mvgavg10day-LAG(mvgavg10day,1)OVER(order by cdate))/mvgavg10day AS mvgavg_slope10
+SELECT cdate,closep,leadp,pctlead
+,CASE WHEN pctlead<0 THEN 0 ELSE 1 END AS label -- For Logistic Regression
+,(mvgavg3day-LAG(mvgavg3day,1)OVER(order by cdate))/mvgavg3day AS mvgavg_slope3
+,(mvgavg4day-LAG(mvgavg4day,1)OVER(order by cdate))/mvgavg4day AS mvgavg_slope4
+,(mvgavg5day-LAG(mvgavg5day,1)OVER(order by cdate))/mvgavg5day AS mvgavg_slope5
+,(mvgavg10day-LAG(mvgavg10day,1)OVER(order by cdate))/mvgavg10day AS mvgavg_slope10
 FROM  prices12
 ORDER BY cdate;
 
