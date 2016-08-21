@@ -85,11 +85,8 @@ SELECT madlib.svm_classification(
 
 
 -- I should use the model on Aug 2016:
-DROP TABLE IF EXISTS svm_slpm1_predictions;
--- SELECT 
--- madlib.svm_predict(svm_slpm1, testdata, cdate, svm_slpm1_predictions)
--- FROM testdata,svm_slpm1
--- WHERE cdate BETWEEN '2016-08-01' AND '2016-08-31'
--- ORDER BY cdate;
+DROP TABLE svm_slpm1_predictions;
+SELECT  madlib.svm_predict('svm_slpm1', 'testdata', 'cdate', 'svm_slpm1_predictions');
+
 
 -- bye
