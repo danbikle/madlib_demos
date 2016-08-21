@@ -115,4 +115,9 @@ FROM logr_slpm1_predictions;
 
 -- I should aggregate predictions
 SELECT MIN(prediction),AVG(prediction),MAX(prediction),COUNT(prediction) FROM logr_slpm1_predictions;
+
+SELECT
+SIGN(prediction-0.5) sgn, COUNT(SIGN(prediction-0.5)) ccount
+FROM logr_slpm1_predictions
+GROUP BY SIGN(prediction-0.5);
 -- bye
