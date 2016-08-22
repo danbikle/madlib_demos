@@ -63,7 +63,7 @@ FROM  prices12
 ORDER BY cdate;
 
 -- I should extract year from command line:
-DROP  TABLE IF EXISTS traindata,testdata;
+DROP   TABLE IF EXISTS traindata,testdata;
 CREATE TABLE traindata AS SELECT * FROM prices13
 WHERE extract(year from cdate) BETWEEN :tstyr -1 - :trainyrs AND :tstyr -1;
 

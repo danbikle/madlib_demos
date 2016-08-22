@@ -51,7 +51,7 @@ FROM  prices10
 ORDER BY cdate;
 
 -- I should add column: mvgavg_slope3, mvgavg_slope4
-DROP TABLE IF EXISTS prices13;
+DROP   TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
 SELECT cdate,closep,pctlead,row_number()OVER(ORDER BY cdate) AS id
 ,CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label -- For classification
@@ -65,7 +65,7 @@ ORDER BY cdate;
 -- I should learn from 1987 through 2014 and 
 -- try to predict each day of 2015,2016.
 
-DROP TABLE IF EXISTS traindata,testdata;
+DROP   TABLE IF EXISTS traindata,testdata;
 CREATE TABLE traindata AS SELECT * FROM prices13
 WHERE cdate BETWEEN '1987-01-01' AND '2014-12-31';
 
@@ -79,7 +79,7 @@ DROP TABLE IF EXISTS svm_slpm2_random;
 SELECT madlib.svm_regression(
 'traindata', -- source table
 'svm_slpm2', -- model                             
-'pctlead',   -- dependent variabl
+'pctlead',   -- dependent variable
 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
 'gaussian',
 'n_components=10',

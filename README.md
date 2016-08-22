@@ -106,5 +106,25 @@ SELECT COUNT(cdate)fn FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctle
 
 ```
 
-* If you have questions, e-me: bikle101@gmail.com
+## demo16.sql demonstrates SVM Regression of GSPC prices.
+
+## demo17.sql demonstrates SVM Regression of GSPC prices.
+
+## demo18.bash demonstrates some Bash techniques:
+
+* It feeds text into shell command using here-doc and EOF token.
+
+* It calls For-Loop driven by a range of integers.
+
+* It feeds shell variables into Postgres as Postgres variables.
+
+## demo18.sql compares Linear Regression, Logistic Regression, SVM Regression.
+
+* demo18.sql demonstrates how to get median of a column:
+
+```sql
+SELECT madlib.svec_median(ARRAY(SELECT pctlead FROM traindata WHERE pctlead IS NOT NULL)) FROM traindata LIMIT 1;
+```
+
+## If you have questions, e-me: bikle101@gmail.com
 
