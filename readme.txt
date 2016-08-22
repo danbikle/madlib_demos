@@ -28,6 +28,21 @@ demo12.sql demonstrates some useful ideas:
 - Postgres ARRAY syntax
 - Postgres extended display
 
+demo13.sql demonstrates Postgres window functions:
+- https://www.postgresql.org/docs/9.3/static/functions-window.html
+- LEAD()
+```sql
+LEAD(closep,1)OVER(ORDER BY cdate)
+```
+- AVG()
+```sql
+AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 9 PRECEDING AND CURRENT ROW)
+```
+demo13.sql demonstrates SQL sub-query:
+```sql
+SELECT * FROM prices10
+WHERE cdate+10 > (SELECT MAX(cdate) FROM prices10);
+```
 
 If you have questions, e-me: bikle101@gmail.com
 

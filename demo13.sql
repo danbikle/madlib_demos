@@ -8,7 +8,7 @@
 -- This script should demonstrate window functions,
 -- and madlib Linear Regression on GSPC (S&P 500) prices.
 
-DROP TABLE IF EXISTS prices;
+DROP   TABLE IF EXISTS prices;
 CREATE TABLE prices
 (
 cdate   date
@@ -172,7 +172,7 @@ GROUP BY SIGN(prediction);
 -- I should report accuracy.
 -- True:
 SELECT COUNT(cdate)tp FROM linr_slpm1_predictions WHERE prediction>0 AND pctlead>0;
-SELECT COUNT(cdate)tn FROM linr_slpm1_predictions WHERE prediction<0AND pctlead<0;
+SELECT COUNT(cdate)tn FROM linr_slpm1_predictions WHERE prediction<0 AND pctlead<0;
 -- False:
 SELECT COUNT(cdate)fp FROM linr_slpm1_predictions WHERE prediction>0 AND pctlead<0;
 SELECT COUNT(cdate)fn FROM linr_slpm1_predictions WHERE prediction<0 AND pctlead>0;
