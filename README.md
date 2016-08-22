@@ -1,4 +1,4 @@
-## README.md
+# README.md
 
 This repo contains madlib demos.
 
@@ -8,7 +8,7 @@ madlib_installation_steps.txt
 
 I describe most of the demos below:
 
-# demo10.sql is a simple walkthrough of a demo I found on the web:
+## demo10.sql is a simple walkthrough of a demo I found on the web:
 
 https://cwiki.apache.org/confluence/display/MADLIB/Quick+Start+Guide+for+Users
 
@@ -19,7 +19,7 @@ I understand the call to madlib.logregr_train().
 demo10.sql is a demo of Logistic Regression.
 
 
-* demo11.sql is a simple walkthrough of a demo I found on the web:
+## demo11.sql is a simple walkthrough of a demo I found on the web:
 
 [Linear Regression Demo](http://madlib.incubator.apache.org/docs/latest/group__grp__linreg.html)
 
