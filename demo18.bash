@@ -8,7 +8,7 @@
 DROP TABLE IF EXISTS predictions;
 EOF
 
-for ((year=2016; year < 2017 ; year++))
+for ((year=2010; year < 2017 ; year++))
 do
   echo $year
   ./psqlmad -f demo18.sql -v tstyr=$year -v trainyrs=30

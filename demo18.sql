@@ -5,8 +5,7 @@
 -- This script should collect predictions from several models.
 
 -- Demo:
--- ./psqlmad -f demo18.sql -v tstyr=2016 -v trainyrs=30
-
+-- ./psqlmad -af demo18.sql -v tstyr=2016 -v trainyrs=30
 
 DROP TABLE IF EXISTS prices;
 CREATE TABLE prices
@@ -33,7 +32,7 @@ cdate
 FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
 
 -- I should add column: pctlead
-DROP TABLE IF EXISTS prices10;
+DROP   TABLE IF EXISTS prices10;
 CREATE TABLE prices10 AS
 SELECT cdate,closep,
 100*(LEAD(closep,1)OVER(ORDER BY cdate)-closep)/closep AS pctlead
@@ -41,7 +40,7 @@ FROM  prices
 ORDER BY cdate;
 
 -- I should add columns: mvgavg3day,mvgavg4day,mvgavg5day,mvgavg10day
-DROP TABLE IF EXISTS prices12;
+DROP   TABLE IF EXISTS prices12;
 CREATE TABLE prices12 as
 SELECT cdate,closep,pctlead,
 AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS mvgavg3day,
@@ -52,7 +51,7 @@ FROM  prices10
 ORDER BY cdate;
 
 -- I should add columns: mvgavg_slope3, mvgavg_slope4, ...
-DROP TABLE IF EXISTS prices13;
+DROP   TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
 SELECT cdate,closep,pctlead,row_number()OVER(ORDER BY cdate) AS id
 ,CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label -- For classification
@@ -64,8 +63,7 @@ FROM  prices12
 ORDER BY cdate;
 
 -- I should extract year from command line:
-
-DROP TABLE IF EXISTS traindata,testdata;
+DROP  TABLE IF EXISTS traindata,testdata;
 CREATE TABLE traindata AS SELECT * FROM prices13
 WHERE extract(year from cdate) BETWEEN :tstyr -1 - :trainyrs AND :tstyr -1;
 
@@ -74,6 +72,7 @@ WHERE extract(year from cdate) BETWEEN :tstyr -1 - :trainyrs AND :tstyr -1;
 --   SET label = CASE WHEN pctlead<(SELECT AVG(pctlead) FROM traindata) THEN 0 ELSE 1 END;
 -- median is better than AVG() here.
 
+-- Median gives better balance than AVG().
 -- I should compute label from median, not AVG():
 UPDATE traindata SET label =
 CASE WHEN pctlead < (
@@ -82,42 +81,15 @@ CASE WHEN pctlead < (
 THEN 0 ELSE 1 END
 ;
 
+-- I should count the classes to verify they are balanced:
 SELECT label,COUNT(label) FROM traindata GROUP BY label ;
 
 CREATE TABLE testdata AS SELECT * FROM prices13
 WHERE extract(year from cdate) = :tstyr;
 
-select min(cdate),max(cdate) from  testdata;
-
--- I should create SVM Regression model which assumes that pctlead depends on mvgavg_slope:
-DROP TABLE IF EXISTS svm_slpm2;
-DROP TABLE IF EXISTS svm_slpm2_summary;
-DROP TABLE IF EXISTS svm_slpm2_random;
-SELECT madlib.svm_regression(
-'traindata', -- source table
-'svm_slpm2', -- model                             
-'pctlead',   -- dependent variable
-'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
-'gaussian',
-'n_components=10',
-'',
-'init_stepsize=[1,0.1,0.01], max_iter=150, n_folds=22, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
-);
--- 'init_stepsize=[1,0.1,0.01], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
-
--- I should collect predictions of testdata
-
-DROP TABLE svm_slpm2_predictions;
-SELECT  madlib.svm_predict('svm_slpm2', 'testdata', 'id', 'svm_slpm2_predictions');
-
+-- I should get ready to collect predictions:
 CREATE TABLE IF NOT EXISTS 
   predictions(model text, cdate date, pctlead float, prediction float, eff float);
-
-INSERT INTO predictions (model,cdate,pctlead,prediction,eff)
-SELECT 'svm_slpm2',cdate,pctlead,prediction
-,SIGN(prediction)*pctlead eff
-FROM prices13 a,svm_slpm2_predictions b
-WHERE a.id = b.id;
 
 -- I should create Linear Regression model which assumes that pctlead depends on mvgavg_slope:
 DROP TABLE IF EXISTS linr_slpm1;
@@ -136,7 +108,6 @@ madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg
 madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10],coef)
 )*pctlead eff
 FROM testdata,linr_slpm1;
-
 
 -- I should create Logistic Regression model which assumes that label depends on mvgavg_slope:
 DROP TABLE IF EXISTS logr_slpm1;
@@ -159,8 +130,42 @@ madlib.logregr_predict_prob(coef,ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slo
 )*pctlead eff
 FROM testdata,logr_slpm1;
 
+-- I should create SVM Regression model which assumes that pctlead depends on mvgavg_slope:
+DROP TABLE IF EXISTS svm_slpm2;
+DROP TABLE IF EXISTS svm_slpm2_summary;
+DROP TABLE IF EXISTS svm_slpm2_random;
+SELECT madlib.svm_regression(
+'traindata', -- source table
+'svm_slpm2', -- model                             
+'pctlead',   -- dependent variable
+'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
+'gaussian',
+'n_components=10',
+'',
+'init_stepsize=[1,0.1,0.01], max_iter=150, n_folds=22, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
+);
+
+-- I should collect predictions of testdata
+DROP TABLE svm_slpm2_predictions;
+SELECT  madlib.svm_predict('svm_slpm2', 'testdata', 'id', 'svm_slpm2_predictions');
+
+INSERT INTO predictions (model,cdate,pctlead,prediction,eff)
+SELECT 'svm_slpm2',cdate,pctlead,prediction
+,SIGN(prediction)*pctlead eff
+FROM prices13 a,svm_slpm2_predictions b
+WHERE a.id = b.id;
+
 -- if pctlead < eff, then model is effective.
 SELECT model
 ,SUM(pctlead) long_only_eff
 ,SUM(eff)     effectiveness
 FROM predictions GROUP BY model;
+
+SELECT model, extract(year from cdate) yr
+,SUM(pctlead) long_only_eff
+,SUM(eff)     effectiveness
+FROM predictions
+GROUP BY model,yr
+ORDER BY model,yr;
+
+-- bye
