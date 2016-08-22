@@ -26,7 +26,8 @@ demo10.sql is a demo of Logistic Regression.
 demo11.sql shows a call to madlib.linregr_train().
 
 
-* demo12.sql demonstrates some useful ideas:
+## demo12.sql demonstrates some useful ideas:
+
 * Postgres COPY command copies CSV rows from file into table.
 * Syntax: Postgres DROP TABLE IF EXISTS
 * Postgres Table Column data types: date, float
@@ -34,7 +35,7 @@ demo11.sql shows a call to madlib.linregr_train().
 * Postgres ARRAY syntax
 * Postgres extended display
 
-* demo13.sql demonstrates Postgres window functions:
+## demo13.sql demonstrates Postgres window functions:
 * https://www.postgresql.org/docs/9.3/static/functions-window.html
 * LEAD()
 ```sql
