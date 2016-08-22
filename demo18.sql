@@ -78,14 +78,14 @@ WHERE extract(year from cdate) = :tstyr;
 
 select min(cdate),max(cdate) from  testdata;
 
--- I should create a model which assumes that pctlead depends on mvgavg_slope:
+-- I should create SVM Regression model which assumes that pctlead depends on mvgavg_slope:
 DROP TABLE IF EXISTS svm_slpm2;
 DROP TABLE IF EXISTS svm_slpm2_summary;
 DROP TABLE IF EXISTS svm_slpm2_random;
 SELECT madlib.svm_regression(
 'traindata', -- source table
 'svm_slpm2', -- model                             
-'pctlead',   -- dependent variabl
+'pctlead',   -- dependent variable
 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
 'gaussian',
 'n_components=10',
@@ -108,5 +108,16 @@ SELECT 'svm_slpm2',cdate,pctlead,prediction
 FROM prices13 a,svm_slpm2_predictions b
 WHERE a.id = b.id;
 
+-- I should create Linear Regression model which assumes that pctlead depends on mvgavg_slope:
+DROP TABLE IF EXISTS linr_slpm1;
+DROP TABLE IF EXISTS linr_slpm1_summary;
+SELECT madlib.linregr_train( 
+'traindata',
+'linr_slpm1',
+'pctlead',
+'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]'
+);
+
+
 -- if pctlead < eff, then model is effective.
-SELECT SUM(pctlead),SUM(eff) FROM predictions;
+SELECT model,SUM(pctlead),SUM(eff) FROM predictions GROUP BY model;
