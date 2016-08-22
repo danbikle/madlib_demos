@@ -32,7 +32,7 @@ cdate
 FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
 
 -- I should add column: pctlead
-DROP TABLE IF EXISTS prices10;
+DROP   TABLE IF EXISTS prices10;
 CREATE TABLE prices10 AS
 SELECT cdate,closep,
 100*(LEAD(closep,1)OVER(ORDER BY cdate)-closep)/closep AS pctlead
@@ -40,7 +40,7 @@ FROM  prices
 ORDER BY cdate;
 
 -- I should add columns: mvgavg3day,mvgavg4day,mvgavg5day,mvgavg10day
-DROP TABLE IF EXISTS prices12;
+DROP   TABLE IF EXISTS prices12;
 CREATE TABLE prices12 as
 SELECT cdate,closep,pctlead,
 AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) AS mvgavg3day,
@@ -51,7 +51,7 @@ FROM  prices10
 ORDER BY cdate;
 
 -- I should add column: mvgavg_slope3, mvgavg_slope4
-DROP TABLE IF EXISTS prices13;
+DROP   TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
 SELECT cdate,closep,pctlead
 ,CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label -- For Logistic Regression
@@ -82,10 +82,9 @@ SELECT madlib.logregr_train(
 'label',      -- labels
 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
 NULL,         -- grouping columns
-    99,       -- max number of iteration
-    'irls'    -- optimizer
-    );
-
+99,           -- max number of iteration
+'irls'        -- optimizer
+);
 
 -- I should use the model on Aug 2016:
 SELECT cdate,pctlead,

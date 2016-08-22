@@ -55,5 +55,48 @@ SELECT * FROM prices10
 WHERE cdate+10 > (SELECT MAX(cdate) FROM prices10);
 ```
 
+## demo14.sql demonstrates Logistic Regression on GSPC prices.
+
+* demo14.sql demonstrates if-then-else logic inside SQL:
+
+```sql
+SELECT CASE WHEN pctlead<0.033 THEN 0 ELSE 1 END AS label FROM prices12;
+```
+
+* demo14.sql demonstrates BETWEEN predicate:
+
+```sql
+SELECT * FROM prices13 WHERE cdate BETWEEN '2015-01-01' AND '2016-12-31';
+```
+
+* demo14.sql demonstrates idea of 'Long-Only Effectiveness':
+
+```sql
+SELECT
+SUM(pctlead) AS effectiveness
+FROM logr_slpm1_predictions;
+```
+
+
+* demo14.sql demonstrates idea of 'Model Effectiveness':
+
+```sql
+SELECT
+SUM(SIGN(prediction-0.5)*pctlead) AS effectiveness
+FROM logr_slpm1_predictions;
+```
+
+* demo14.sql demonstrates idea of 'Accuracy':
+
+```sql
+-- True:
+SELECT COUNT(cdate)tp FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead>0;
+SELECT COUNT(cdate)tn FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead<0;
+-- False:
+SELECT COUNT(cdate)fp FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctlead<0;
+SELECT COUNT(cdate)fn FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead>0;
+```
+
+
 * If you have questions, e-me: bikle101@gmail.com
 
