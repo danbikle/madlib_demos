@@ -99,13 +99,6 @@ SELECT madlib.svm_regression(
 DROP TABLE svm_slpm2_predictions;
 SELECT  madlib.svm_predict('svm_slpm2', 'testdata', 'id', 'svm_slpm2_predictions');
 
--- I should report model effectiveness:
-SELECT
-SUM(SIGN(prediction)*pctlead) AS effectiveness,
-COUNT(cdate) prediction_count
-FROM prices13 a,svm_slpm2_predictions b
-WHERE a.id = b.id;
-
 CREATE TABLE IF NOT EXISTS 
   predictions(model text, cdate date, pctlead float, prediction float, eff float);
 
@@ -114,3 +107,6 @@ SELECT 'svm_slpm2',cdate,pctlead,prediction
 ,SIGN(prediction)*pctlead eff
 FROM prices13 a,svm_slpm2_predictions b
 WHERE a.id = b.id;
+
+-- if pctlead < eff, then model is effective.
+SELECT SUM(pctlead),SUM(eff) FROM predictions;

@@ -11,6 +11,6 @@ EOF
 for ((year=2016; year < 2017 ; year++))
 do
   echo $year
-  echo "./psqlmad -f demo18.sql -v tstyr=$year -v trainyrs=30"
+  ./psqlmad -f demo18.sql -v tstyr=$year -v trainyrs=30
 done
 exit
