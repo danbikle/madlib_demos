@@ -21,9 +21,9 @@ demo10.sql is a demo of Logistic Regression.
 
 demo11.sql is a simple walkthrough of a demo I found on the web:
 
-http://madlib.incubator.apache.org/docs/latest/group__grp__linreg.html
+[Linear Regression Demo](http://madlib.incubator.apache.org/docs/latest/group__grp__linreg.html)
 
-demo11.sql is a demo of Linear Regression and shows a call to madlib.linregr_train().
+demo11.sql shows a call to madlib.linregr_train().
 
 
 demo12.sql demonstrates some useful ideas:
