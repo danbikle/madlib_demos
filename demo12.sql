@@ -40,7 +40,7 @@ cdate
 FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
 
 -- I should create a table of 2016 prices:
-DROP TABLE IF EXISTS prices2016;
+DROP   TABLE IF EXISTS prices2016;
 CREATE TABLE prices2016 as
 SELECT cdate-'2015-12-31' as yearday,cdate,closep 
 FROM  prices
