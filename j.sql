@@ -1,7 +1,8 @@
--- ./psqlmad -f j.sql -v qry="'helloworld'"
-drop table dropme;
-create table dropme (txt text);
-insert into dropme values('helloworld');
-select * from dropme where txt = 'helloworld';
-select * from dropme where txt = :qry ;
+-- 
 
+UPDATE traindata SET label =
+CASE WHEN pctlead < (
+  SELECT madlib.svec_median(ARRAY(SELECT pctlead FROM traindata WHERE pctlead IS NOT NULL)) FROM traindata LIMIT 1
+)
+THEN 0 ELSE 1 END
+;

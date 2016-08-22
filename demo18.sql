@@ -51,7 +51,7 @@ AVG(closep)OVER(ORDER BY cdate ROWS BETWEEN 9 PRECEDING AND CURRENT ROW) AS mvga
 FROM  prices10
 ORDER BY cdate;
 
--- I should add column: mvgavg_slope3, mvgavg_slope4
+-- I should add columns: mvgavg_slope3, mvgavg_slope4, ...
 DROP TABLE IF EXISTS prices13;
 CREATE TABLE prices13 as
 SELECT cdate,closep,pctlead,row_number()OVER(ORDER BY cdate) AS id
@@ -63,16 +63,27 @@ SELECT cdate,closep,pctlead,row_number()OVER(ORDER BY cdate) AS id
 FROM  prices12
 ORDER BY cdate;
 
--- I should learn from 1987 through 2014 and 
--- try to predict each day of 2015,2016.
+-- I should extract year from command line:
 
 DROP TABLE IF EXISTS traindata,testdata;
 CREATE TABLE traindata AS SELECT * FROM prices13
 WHERE extract(year from cdate) BETWEEN :tstyr -1 - :trainyrs AND :tstyr -1;
 
-select min(cdate),max(cdate) from  traindata;
+-- I want balanced classes to train from:
+-- UPDATE traindata
+--   SET label = CASE WHEN pctlead<(SELECT AVG(pctlead) FROM traindata) THEN 0 ELSE 1 END;
+-- median is better than AVG() here.
 
--- I should extract year from command line:
+-- I should compute label from median, not AVG():
+UPDATE traindata SET label =
+CASE WHEN pctlead < (
+  SELECT madlib.svec_median(ARRAY(SELECT pctlead FROM traindata WHERE pctlead IS NOT NULL)) FROM traindata LIMIT 1
+)
+THEN 0 ELSE 1 END
+;
+
+SELECT label,COUNT(label) FROM traindata GROUP BY label ;
+
 CREATE TABLE testdata AS SELECT * FROM prices13
 WHERE extract(year from cdate) = :tstyr;
 
@@ -90,7 +101,7 @@ SELECT madlib.svm_regression(
 'gaussian',
 'n_components=10',
 '',
-'init_stepsize=[1,0.1,0.01], max_iter=99, n_folds=22, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
+'init_stepsize=[1,0.1,0.01], max_iter=150, n_folds=22, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
 );
 -- 'init_stepsize=[1,0.1,0.01], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
 
