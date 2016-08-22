@@ -126,5 +126,14 @@ SELECT COUNT(cdate)fn FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctle
 SELECT madlib.svec_median(ARRAY(SELECT pctlead FROM traindata WHERE pctlead IS NOT NULL)) FROM traindata LIMIT 1;
 ```
 
+## demo18.txt reports that SVM Regression is the most effective model between 2010 and 2016.
+
+## demo19.bash is similar to demo18.bash.
+
+## demo19.sql is similar to demo18.sql.
+
+## demo19.txt shows poor results probably due to over-fitting probably due to too many features.
+
+
 ## If you have questions, e-me: bikle101@gmail.com
 
