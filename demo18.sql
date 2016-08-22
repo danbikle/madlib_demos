@@ -140,6 +140,14 @@ NULL,         -- grouping columns
 'irls'        -- optimizer
 );
 
+INSERT INTO predictions (model,cdate,pctlead,prediction,eff)
+SELECT 'logr_slpm1',cdate,pctlead,
+madlib.logregr_predict_prob(coef,ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]) AS prediction 
+,SIGN(
+-0.5+madlib.logregr_predict_prob(coef,ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10])
+)*pctlead eff
+FROM testdata,logr_slpm1;
+
 -- if pctlead < eff, then model is effective.
 SELECT model
 ,SUM(pctlead) long_only_eff
