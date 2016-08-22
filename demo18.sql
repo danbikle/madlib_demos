@@ -126,5 +126,22 @@ madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg
 )*pctlead eff
 FROM testdata,linr_slpm1;
 
+
+-- I should create Logistic Regression model which assumes that label depends on mvgavg_slope:
+DROP TABLE IF EXISTS logr_slpm1;
+DROP TABLE IF EXISTS logr_slpm1_summary;
+SELECT madlib.logregr_train(
+'traindata',  -- source table
+'logr_slpm1', -- model                             
+'label',      -- labels
+'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]', -- features
+NULL,         -- grouping columns
+99,           -- max number of iteration
+'irls'        -- optimizer
+);
+
 -- if pctlead < eff, then model is effective.
-SELECT model,SUM(pctlead),SUM(eff) FROM predictions GROUP BY model;
+SELECT model
+,SUM(pctlead) long_only_eff
+,SUM(eff)     effectiveness
+FROM predictions GROUP BY model;
