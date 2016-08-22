@@ -12,6 +12,13 @@ demo10.sql is a simple walkthrough of a demo I found on the web:
 https://cwiki.apache.org/confluence/display/MADLIB/Quick+Start+Guide+for+Users
 I use demo10.sql to verify that madlib is installed and that 
 I understand the call to madlib.logregr_train().
+demo10.sql is a demo of Logistic Regression.
+
+
+demo11.sql is a simple walkthrough of a demo I found on the web:
+http://madlib.incubator.apache.org/docs/latest/group__grp__linreg.html
+demo11.sql is a demo of Linear Regression and shows a call to madlib.linregr_train().
+
 
 
 
