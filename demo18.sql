@@ -118,6 +118,13 @@ SELECT madlib.linregr_train(
 'ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10]'
 );
 
+INSERT INTO predictions (model,cdate,pctlead,prediction,eff)
+SELECT 'linr_slpm1',cdate,pctlead,
+madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10],coef) AS prediction 
+,SIGN(
+madlib.linregr_predict(ARRAY[1,mvgavg_slope3, mvgavg_slope4,mvgavg_slope5,mvgavg_slope10],coef)
+)*pctlead eff
+FROM testdata,linr_slpm1;
 
 -- if pctlead < eff, then model is effective.
 SELECT model,SUM(pctlead),SUM(eff) FROM predictions GROUP BY model;
