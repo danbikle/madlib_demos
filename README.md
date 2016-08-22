@@ -31,7 +31,11 @@ demo11.sql shows a call to madlib.linregr_train().
 * Postgres COPY command copies CSV rows from file into table.
 * Syntax: Postgres DROP TABLE IF EXISTS
 * Postgres Table Column data types: date, float
-* SQL date arithmetic
+* SQL date arithmetic:
+```sql
+SELECT cdate-'2015-12-31' FROM  prices;
+
+```
 * Postgres ARRAY syntax
 * Postgres extended display
 
