@@ -134,6 +134,27 @@ SELECT madlib.svec_median(ARRAY(SELECT pctlead FROM traindata WHERE pctlead IS N
 
 ## demo19.txt shows poor results probably due to over-fitting probably due to too many features.
 
+## gspc.csv is data from Yahoo:
+
+* https://finance.yahoo.com/quote/%5EGSPC
+
+## psqlmad is a shell script which wraps the Postgres psql command line UI.
+
+* psqlmad shows how to pass a password to psql on command line:
+
+```bash
+PGPASSWORD=madlib /usr/bin/psql -U madlib -d madlib -h 127.0.0.1 -P pager=no $@
+```
+
+## some_results.txt shows some results from demo13.sql, demo14.sql, demo16.sql, demo17.sql
+
+## sqldemo1.sql contains syntax examples for teaching SQL.
+
+## sqldemo1.txt contains output from sqldemo1.sql.
+
+## svmreg11.bash is similar to demo19.bash is similar to demo18.bash.
+
+## svmreg11.sql runs SVM Regression against GSPC prices.
 
 ## If you have questions, e-me: bikle101@gmail.com
 
