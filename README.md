@@ -1,4 +1,4 @@
-README.md
+## README.md
 
 This repo contains madlib demos.
 
@@ -8,7 +8,7 @@ madlib_installation_steps.txt
 
 I describe most of the demos below:
 
-* demo10.sql is a simple walkthrough of a demo I found on the web:
+# demo10.sql is a simple walkthrough of a demo I found on the web:
 
 https://cwiki.apache.org/confluence/display/MADLIB/Quick+Start+Guide+for+Users
 
