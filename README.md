@@ -97,6 +97,14 @@ SELECT COUNT(cdate)fp FROM logr_slpm1_predictions WHERE prediction>0.5 AND pctle
 SELECT COUNT(cdate)fn FROM logr_slpm1_predictions WHERE prediction<0.5 AND pctlead>0;
 ```
 
+## demo15.sql demonstrates SVM Classification of GSPC prices.
+
+* demo15.sql demonstrates how to implement K-Fold Validation to tune hyperparameters:
+
+```sql
+'init_stepsize=[1,0.1], max_iter=[100,150], n_folds=20, lambda=[0.01,0.02], epsilon=[0.01, 0.02]'
+
+```
 
 * If you have questions, e-me: bikle101@gmail.com
 
