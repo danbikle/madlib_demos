@@ -20,6 +20,13 @@ http://madlib.incubator.apache.org/docs/latest/group__grp__linreg.html
 demo11.sql is a demo of Linear Regression and shows a call to madlib.linregr_train().
 
 
+demo12.sql demonstrates some useful ideas:
+- Postgres COPY command copies CSV rows from file into table.
+- Syntax: Postgres DROP TABLE IF EXISTS
+- Postgres Table Column data types: date, float
+- SQL date arithmetic
+- Postgres ARRAY syntax
+- Postgres extended display
 
 
 If you have questions, e-me: bikle101@gmail.com

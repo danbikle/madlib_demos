@@ -11,7 +11,7 @@
 -- This script should demonstrate Linear Regression.
 
 -- Goog: In postgres how to copy CSV file into table?
-DROP TABLE IF EXISTS prices;
+DROP   TABLE IF EXISTS prices;
 CREATE TABLE prices
 (
 cdate   date
