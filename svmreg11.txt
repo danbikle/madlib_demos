@@ -1,0 +1,1027 @@
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ ./svmreg11.bash 
+2000
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7832
+    min     |    max     
+------------+------------
+ 1969-01-02 | 1999-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2000-01-03 | 2000-12-29
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 4.77237296331503 |              252
+(1 row)
+
+ sign |   effectiveness   | prediction_count 
+------+-------------------+------------------
+   -1 |  7.42482725923906 |               97
+    1 | -2.65245429592403 |              155
+(2 rows)
+
+ lo_effectiveness  | prediction_count 
+-------------------+------------------
+ -10.0772815551631 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           44
+            -1 |          1 |           79
+             1 |         -1 |           53
+             1 |          1 |           76
+(4 rows)
+
+2001
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7834
+    min     |    max     
+------------+------------
+ 1970-01-02 | 2000-12-29
+(1 row)
+
+SELECT 248
+    min     |    max     
+------------+------------
+ 2001-01-02 | 2001-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+   effectiveness   | prediction_count 
+-------------------+------------------
+ -8.31679509154238 |              248
+(1 row)
+
+ sign |   effectiveness   | prediction_count 
+------+-------------------+------------------
+    1 | -8.31679509154238 |              248
+(1 row)
+
+ lo_effectiveness  | prediction_count 
+-------------------+------------------
+ -8.31679509154238 |              248
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |          1 |          128
+             1 |          1 |          120
+(2 rows)
+
+2002
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7828
+    min     |    max     
+------------+------------
+ 1971-01-04 | 2001-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2002-01-02 | 2002-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ -20.491946959693 |              252
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+    1 | -20.491946959693 |              252
+(1 row)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ -20.491946959693 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |          1 |          140
+             1 |          1 |          112
+(2 rows)
+
+2003
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7827
+    min     |    max     
+------------+------------
+ 1972-01-03 | 2002-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2003-01-02 | 2003-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 21.2426910867141 |              252
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+    1 | 21.2426910867141 |              252
+(1 row)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 21.2426910867141 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |          1 |          115
+             0 |          1 |            1
+             1 |          1 |          136
+(3 rows)
+
+2004
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7828
+    min     |    max     
+------------+------------
+ 1973-01-02 | 2003-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2004-01-02 | 2004-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 8.72363171559803 |              252
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+    1 | 8.72363171559803 |              252
+(1 row)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 8.72363171559803 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |          1 |          112
+             1 |          1 |          140
+(2 rows)
+
+2005
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7828
+    min     |    max     
+------------+------------
+ 1974-01-02 | 2004-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2005-01-03 | 2005-12-30
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 5.93863408575069 |              252
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+    1 | 5.93863408575069 |              252
+(1 row)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 5.93863408575069 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |          1 |          110
+             1 |          1 |          142
+(2 rows)
+
+2006
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7827
+    min     |    max     
+------------+------------
+ 1975-01-02 | 2005-12-30
+(1 row)
+
+SELECT 251
+    min     |    max     
+------------+------------
+ 2006-01-03 | 2006-12-29
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 11.5068031505068 |              251
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+    1 | 11.5068031505068 |              251
+(1 row)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 11.5068031505068 |              251
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |          1 |          111
+             1 |          1 |          140
+(2 rows)
+
+2007
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7825
+    min     |    max     
+------------+------------
+ 1976-01-02 | 2006-12-29
+(1 row)
+
+SELECT 251
+    min     |    max     
+------------+------------
+ 2007-01-03 | 2007-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness  | prediction_count 
+-----------------+------------------
+ 4.5938609808316 |              251
+(1 row)
+
+ sign |   effectiveness   | prediction_count 
+------+-------------------+------------------
+   -1 | 0.588733739666063 |                1
+    1 |  4.00512724116554 |              250
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 3.41639350149947 |              251
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |          1 |          113
+             1 |         -1 |            1
+             1 |          1 |          137
+(3 rows)
+
+2008
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7823
+    min     |    max     
+------------+------------
+ 1977-01-03 | 2007-12-31
+(1 row)
+
+SELECT 253
+    min     |    max     
+------------+------------
+ 2008-01-02 | 2008-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+   effectiveness   | prediction_count 
+-------------------+------------------
+ -23.0168903287768 |              253
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+   -1 |  6.2622048967202 |               12
+    1 | -29.279095225497 |              241
+(2 rows)
+
+ lo_effectiveness  | prediction_count 
+-------------------+------------------
+ -35.5413001222172 |              253
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |            6
+            -1 |          1 |          119
+             0 |          1 |            1
+             1 |         -1 |            6
+             1 |          1 |          121
+(5 rows)
+
+2009
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7824
+    min     |    max     
+------------+------------
+ 1978-01-03 | 2008-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2009-01-02 | 2009-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+   effectiveness   | prediction_count 
+-------------------+------------------
+ -17.1344917922209 |              252
+(1 row)
+
+ sign |   effectiveness   | prediction_count 
+------+-------------------+------------------
+   -1 | -20.1807539218745 |              124
+    1 |  3.04626212965362 |              128
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 23.2270160515281 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           69
+            -1 |          1 |           57
+             1 |         -1 |           55
+             1 |          1 |           71
+(4 rows)
+
+2010
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7824
+    min     |    max     
+------------+------------
+ 1979-01-02 | 2009-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2010-01-04 | 2010-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 18.0301223731734 |              252
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+   -1 | 2.42330098080606 |              125
+    1 | 15.6068213923673 |              127
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 13.1835204115613 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           71
+            -1 |          1 |           54
+             1 |         -1 |           54
+             1 |          1 |           73
+(4 rows)
+
+2011
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7823
+    min     |    max     
+------------+------------
+ 1980-01-02 | 2010-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2011-01-03 | 2011-12-30
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 24.6822537189576 |              252
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+   -1 | 10.7798931537428 |              111
+    1 | 13.9023605652149 |              141
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 3.12246741147213 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           57
+            -1 |          1 |           60
+             1 |         -1 |           54
+             1 |          1 |           81
+(4 rows)
+
+2012
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7822
+    min     |    max     
+------------+------------
+ 1981-01-02 | 2011-12-30
+(1 row)
+
+SELECT 250
+    min     |    max     
+------------+------------
+ 2012-01-03 | 2012-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 12.8617832859486 |              250
+(1 row)
+
+ sign |   effectiveness    | prediction_count 
+------+--------------------+------------------
+   -1 | -0.759559239665602 |              105
+    1 |   13.6213425256142 |              145
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 14.3809017652799 |              250
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           58
+            -1 |          1 |           71
+             1 |         -1 |           47
+             1 |          1 |           74
+(4 rows)
+
+2013
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7819
+    min     |    max     
+------------+------------
+ 1982-01-04 | 2012-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2013-01-02 | 2013-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 8.07782780802105 |              252
+(1 row)
+
+ sign |   effectiveness   | prediction_count 
+------+-------------------+------------------
+   -1 | -7.52435971262979 |              104
+    1 |  15.6021875206508 |              148
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 23.1265472332806 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           62
+            -1 |          1 |           64
+             1 |         -1 |           42
+             1 |          1 |           84
+(4 rows)
+
+2014
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7818
+    min     |    max     
+------------+------------
+ 1983-01-03 | 2013-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2014-01-02 | 2014-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+   effectiveness   | prediction_count 
+-------------------+------------------
+ -8.61950267897134 |              252
+(1 row)
+
+ sign |   effectiveness   | prediction_count 
+------+-------------------+------------------
+   -1 | -10.4530852327743 |               83
+    1 |  1.83358255380291 |              169
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 12.2866677865772 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           51
+            -1 |          1 |           76
+             1 |         -1 |           32
+             1 |          1 |           93
+(4 rows)
+
+2015
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7817
+    min     |    max     
+------------+------------
+ 1984-01-03 | 2014-12-31
+(1 row)
+
+SELECT 252
+    min     |    max     
+------------+------------
+ 2015-01-02 | 2015-12-31
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 13.0350237870611 |              252
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+   -1 | 7.03179889375044 |               78
+    1 |  6.0032248933107 |              174
+(2 rows)
+
+ lo_effectiveness  | prediction_count 
+-------------------+------------------
+ -1.02857400043974 |              252
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           31
+            -1 |          1 |           86
+             1 |         -1 |           47
+             1 |          1 |           88
+(4 rows)
+
+2016
+DROP TABLE
+CREATE TABLE
+COPY 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 16767
+DROP TABLE
+SELECT 7816
+    min     |    max     
+------------+------------
+ 1985-01-02 | 2015-12-31
+(1 row)
+
+SELECT 160
+    min     |    max     
+------------+------------
+ 2016-01-04 | 2016-08-19
+(1 row)
+
+DROP TABLE
+DROP TABLE
+DROP TABLE
+ svm_regression 
+----------------
+ 
+(1 row)
+
+DROP TABLE
+ svm_predict 
+-------------
+ 
+(1 row)
+
+  effectiveness   | prediction_count 
+------------------+------------------
+ 15.7067097702545 |              160
+(1 row)
+
+ sign |  effectiveness   | prediction_count 
+------+------------------+------------------
+   -1 | 3.43812699227486 |               52
+    1 | 12.2685827779796 |              108
+(2 rows)
+
+ lo_effectiveness | prediction_count 
+------------------+------------------
+ 8.83045578570473 |              160
+(1 row)
+
+ true_or_false | pos_or_neg | observations 
+---------------+------------+--------------
+            -1 |         -1 |           26
+            -1 |          1 |           45
+             1 |         -1 |           26
+             1 |          1 |           62
+               |          1 |            1
+(5 rows)
+
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ 
+[ann@cen7 madlib_demos]$ 

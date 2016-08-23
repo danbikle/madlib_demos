@@ -156,5 +156,7 @@ PGPASSWORD=madlib /usr/bin/psql -U madlib -d madlib -h 127.0.0.1 -P pager=no $@
 
 ## svmreg11.sql runs SVM Regression against GSPC prices.
 
+## svmreg11.txt contains output from svmreg11.sql
+
 ## If you have questions, e-me: bikle101@gmail.com
 
