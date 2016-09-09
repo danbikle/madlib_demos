@@ -3,7 +3,7 @@
 # svmreg11.bash
 
 # This script should use a loop to call svmreg11.sql
-./psqlmad -f svmreg11truncate_pred.sql
+./psqlmad -f svmreg11cr_pred.sql
 for ((year=2000; year < 2017 ; year++))
 do
   echo $year
