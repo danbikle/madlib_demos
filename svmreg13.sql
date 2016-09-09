@@ -132,6 +132,7 @@ FROM prices13 a,svm_slpm2_predictions b
 WHERE a.id = b.id
 GROUP BY SIGN(prediction)*SIGN(pctlead), SIGN(prediction)
 ORDER BY SIGN(prediction)*SIGN(pctlead), SIGN(prediction)
+;
 
 -- bye
 
