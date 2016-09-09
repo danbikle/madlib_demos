@@ -10,4 +10,7 @@ do
   ./psqlmad -f svmreg11.sql -v tstyr=$year -v trainyrs=30
   ./psqlmad -f svmreg11collect_pred.sql
 done
+
+./psqlmad -f svmreg11rpt.sql
+
 exit
