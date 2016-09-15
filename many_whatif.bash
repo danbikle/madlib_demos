@@ -19,6 +19,8 @@ declare -i whatif_i
 aprice_i=`sed -n '2 p' gspc.csv |awk -F, '{print $(NF-2)}'|awk -F. '{print $1}'`
 for delta_i in -40 -30 -20 -10 0 10 20 30 40
 do
+  date
+  echo Busy... Please Wait.
   whatif_i=aprice_i+delta_i
   ./psqlmad -af whatif.sql -v whatif_price=$whatif_i -v tstyr=`date +%Y` -v trainyrs=25 -v ma1=2 -v ma2=3 -v ma3=4 -v ma4=5 -v ma4=5 -v ma5=6 -v ma6=7 -v ma7=8 -v ma8=9 >> /tmp/whatif.sql.out.txt 2>&1
   ./psqlmad -af many_whatif_get.sql >> /tmp/many_whatif_get.sql.txt 2>&1
