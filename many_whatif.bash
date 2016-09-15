@@ -7,6 +7,9 @@
 # Demo:
 # ./many_whatif.bash
 
+# I should prep:
+./psqlmad -af many_whatif_prep.sql
+
 # I should get prices:
 curl http://ichart.finance.yahoo.com/table.csv?s=%5EGSPC > gspc.csv
 
@@ -18,5 +21,8 @@ for delta_i in -20 -10 0 10 20
 do
   whatif_i=aprice_i+delta_i
   echo  ./psqlmad -af whatif.sql -v whatif_price=$whatif_i -v tstyr=`date +%Y` -v trainyrs=25 -v ma1=2 -v ma2=3 -v ma3=4 -v ma4=5 -v ma4=5 -v ma5=6 -v ma6=7 -v ma7=8 -v ma8=9
+  ./psqlmad -af many_whatif_get.sql
 done
+
+./psqlmad -af many_whatif_rpt.sql
 exit
