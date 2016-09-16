@@ -16,7 +16,9 @@ curl http://ichart.finance.yahoo.com/table.csv?s=%5EGSPC > gspc.csv
 declare -i aprice_i
 declare -i delta_i
 declare -i whatif_i
-aprice_i=`sed -n '2 p' gspc.csv |awk -F, '{print $(NF-2)}'|awk -F. '{print $1}'`
+# aprice_i=`sed -n '2 p' gspc.csv |awk -F, '{print $(NF-2)}'|awk -F. '{print $1}'`
+aprice_i=`sed -n 2p gspc.csv | sed 's/^.*,//'|sed 's/\..*//'`
+
 for delta_i in -40 -30 -20 -10 0 10 20 30 40
 do
   date
