@@ -158,5 +158,7 @@ PGPASSWORD=madlib /usr/bin/psql -U madlib -d madlib -h 127.0.0.1 -P pager=no $@
 
 ## svmreg11.txt contains output from svmreg11.sql
 
+## svmreg12.bash wraps svmreg12.sql
+
 ## If you have questions, e-me: bikle101@gmail.com
 
