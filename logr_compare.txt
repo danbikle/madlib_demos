@@ -1,0 +1,17 @@
+~/madlib_demos/logr_compare.txt
+
+It looks like Logistic Regression works better than SVM.
+
+I have software which uses logr to backtest:
+
+https://github.com/danbikle/reg4us
+
+svm results:
+  
+ effectiveness  | prediction_count 
+----------------+------------------
+ 151.4095955166 |             4204
+
+logr results:
+228.9
+
