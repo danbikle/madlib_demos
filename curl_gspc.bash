@@ -1,2 +1,2 @@
 #!/bin/bash
-curl http://ichart.finance.yahoo.com/table.csv?s=%5EGSPC > gspc.csv
+curl -L ml4.us/csv/GSPC.csv > gspc.csv

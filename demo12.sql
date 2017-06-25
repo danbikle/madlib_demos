@@ -19,8 +19,8 @@ cdate   date
 ,highp  float
 ,lowp   float
 ,closep float
-,volume float
 ,adjp   float
+,volume float
 )
 ;
 
@@ -34,8 +34,8 @@ cdate
 ,highp  
 ,lowp   
 ,closep 
-,volume 
 ,adjp   
+,volume 
 )
 FROM '/home/ann/madlib_demos/gspc.csv' WITH CSV HEADER;
 
